@@ -9,6 +9,9 @@ app.set('view engine', 'ejs');
 // listen for requests
 app.listen(3000);
 
+// middleware & static files
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
     //res.send('<p>home page</p>');
     const blogs = [
