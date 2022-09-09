@@ -1,7 +1,15 @@
 const express = require('express');
-
+const mongoose = require('mongoose');
 //express app
 const app = express();
+
+// connect to database
+const dbURI = 'mongodb://root:example@localhost:27017/nodejs?authSource=admin';
+const connectOptions    = {  useNewUrlParser: true,  useUnifiedTopology: true }
+
+mongoose.connect(dbURI, connectOptions)
+    .then((result) => console.log('successfully connected to the database'))
+    .catch((err) => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');

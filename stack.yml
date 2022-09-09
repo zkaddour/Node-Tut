@@ -5,20 +5,34 @@ version: '3.1'
 services:
 
   mongo:
+    container_name: mongo
     image: mongo
     restart: always
+    ports:
+      - 27017:27017
+    networks:
+      - mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
 
   mongo-express:
+    container_name: mongo-express
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
+    networks:
+      - mongo
+    depends_on:
+      - mongo
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USERNAME}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
       ME_CONFIG_MONGODB_URL: ${MONGODB_LINK}
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGOE_USERNAME}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOE_PASSWORD}
+
+networks:
+  mongo:
+    name: mongo
