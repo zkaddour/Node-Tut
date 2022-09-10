@@ -9,13 +9,13 @@ I installed `lodash` while following the course, but I doubt I will use it in th
 I chose to create the database in a docker environment for personal preferences. If you wish to do the same you need to follow the following steps (I run windows):
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- Create and fill the `.env` file based on `.env.example`:
+- Create and fill the `.env.db` file based on `.env.db.example`:
 
   - `MONGO_INITDB_ROOT_USERNAME`: is the admin username used to access the database.
 
   - `MONGO_INITDB_ROOT_PASSWORD`: is the admin password used to access the database.
 
-- Run `docker run --name database -v /db:/data/db -p 6017:27017 --env-file ./.env mongo:latest` in the root directory to initiate the database container. Do this only on the first time you initialize the project. You can add `--it` to access the database shell directly or open a terminal through Docker Desktop.
+- Run `docker run --name database -v db:/data/db -p 6017:27017 --env-file ./.env.db mongo:latest` in the root directory to initiate the database container. Do this only on the first time you initialize the project. You can add the `--it` flag to access the database shell directly or open a terminal through Docker Desktop.
 
 - In the container shell run `mongosh` to access MongoDB database.
 
