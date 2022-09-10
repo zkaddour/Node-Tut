@@ -6,7 +6,7 @@ A beginner project with the objective of learning the basics of Node.js. I used 
 
 I installed `lodash` while following the course, but I doubt I will use it in the future. I should use it to learn how to remove unrequired dependencies.
 
-I chose to create the database in a docker environment for personal preferences. If you wish to do the same you need to follow the following steps (I run windows):
+I chose to create the database in a docker environment for personal preferences. If you wish to do the same you need to follow the following steps (I run windows and wsl):
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - Create and fill the `.env.db` file based on `.env.db.example`:
@@ -15,7 +15,7 @@ I chose to create the database in a docker environment for personal preferences.
 
   - `MONGO_INITDB_ROOT_PASSWORD`: is the admin password used to access the database.
 
-- Run `docker run --name database -v db:/data/db -p 6017:27017 --env-file ./.env.db mongo:latest` in the root directory to initiate the database container. Do this only on the first time you initialize the project. You can add the `--it` flag to access the database shell directly or open a terminal through Docker Desktop.
+- Run `docker run --name database -v $(pwd)/db:/data/db -p 6017:27017 --env-file ./.env.db mongo:latest` in the root directory to initiate the database container. Do this only on the first time you initialize the project. You can add the `--it` flag to access the database shell directly or open a terminal through Docker Desktop.
 
 - In the container shell run `mongosh` to access MongoDB database.
 
@@ -26,3 +26,5 @@ I chose to create the database in a docker environment for personal preferences.
 - To create a new database you need to use the command `use` as there is no create database command. In this case we will name the new database as `nodejs` so we run `use nodejs`.
 
 - Running `use nodejs` does not fully register the new database and it will not be visible in the list outputed by running `show dbs`. To save the database we can create an empty collection by running `db.createCollection("blogs")`. After running `show dbs` you will notice that `nodejs` is now present in the list.
+
+I decided against using `mongo-express` as I had way too many errors, but since I seem to have a stable connection and volume sharing I might attempt it again.
