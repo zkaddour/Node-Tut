@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog')
 //express app
 const app = express();
 
@@ -8,17 +9,31 @@ const dbURI = 'mongodb://firstUser:Password123@localhost:6017/nodejs?authSource=
 const connectOptions    = {  useNewUrlParser: true,  useUnifiedTopology: true }
 
 mongoose.connect(dbURI, connectOptions)
-    .then((result) => console.log('successfully connected to the database'))
+    .then((result) => app.listen(3000))
     .catch((err) => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');
 
-// listen for requests
-app.listen(3000);
-
 // middleware & static files
 app.use(express.static('public'));
+
+// mongoose ad mongo sandbox routes
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'new blog',
+        snippet: 'about my new blog',
+        body: 'more about this new blog'
+    });
+
+    blog.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log("An error occured");
+        });
+})
 
 app.get('/', (req, res) => {
     //res.send('<p>home page</p>');
