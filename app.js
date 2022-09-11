@@ -18,31 +18,19 @@ app.set('view engine', 'ejs');
 // middleware & static files
 app.use(express.static('public'));
 
-// mongoose ad mongo sandbox routes
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog({
-        title: 'new blog',
-        snippet: 'about my new blog',
-        body: 'more about this new blog'
-    });
-
-    blog.save()
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            console.log("An error occured");
-        });
-})
-
 app.get('/', (req, res) => {
     //res.send('<p>home page</p>');
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    ];
-    res.render('index', {title: 'Home', blogs});
+    res.redirect('/blogs');
+});
+
+app.get('/blogs', (req, res) => {
+    Blog.find().sort({ createdAt: -1})
+        .then((result) => {
+            res.render('index', { title: 'All Blogs', blogs: result});
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
 app.get('/about', (req, res) => {
