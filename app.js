@@ -30,6 +30,7 @@ app.get('/about', (req, res) => {
     res.render('about', {title: 'About'});
 });
 
+// Using a Router for all the blogs related links
 app.use('/blogs', blogRoutes);
 
 // 404's
